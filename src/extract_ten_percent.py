@@ -100,8 +100,8 @@ if __name__ == "__main__":
     # create and format new train and test data as .tsv files
     new_train_data = initial_train_data[initial_train_data[arguments.data_row_id_column].isin(X_train)]
     new_test_data = initial_train_data[initial_train_data[arguments.data_row_id_column].isin(X_test)]
-    new_train_data.to_csv(arguments.train_output_data_path, sep="\t")
-    new_test_data.to_csv(arguments.test_output_data_path, sep="\t")
+    new_train_data.to_csv(arguments.train_output_data_path, sep="\t", index=False)
+    new_test_data.to_csv(arguments.test_output_data_path, sep="\t", index=False)
 
 
 
