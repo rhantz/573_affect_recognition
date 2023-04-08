@@ -98,11 +98,11 @@ def process_text(text: str, lowercase=True, remove_punctuation=True, numbers='re
 
 def get_word_counts(text: str) -> str:
     """
-    Given text, returns a string of features
+    Given text, returns a string of word counts
     Args:
         text: string
     Returns:
-        feature_string: an alphabetized string of counts of words in input in format word1 count1 word2 count2
+        feature_string: an alphabetized string of words from input formatted word1:count1 word2:count2 etc
     """
     tokens = {}
     for item in text.split():
@@ -112,7 +112,7 @@ def get_word_counts(text: str) -> str:
             tokens[item] = 1
     feature_string = ''
     for k in sorted(tokens.keys()):
-        feature_string += k + ' ' + str(tokens[k]) + ' '
+        feature_string += k + ':' + str(tokens[k]) + ' '
     return feature_string
 
 
