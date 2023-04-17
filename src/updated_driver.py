@@ -3,7 +3,7 @@ Driver script
 CLI usage to train and run inference with w2v:
 `python driver.py
 --train_input_data_path ../data/eng/train/eng_train_new.tsv
---dev_input_data_path ../data/eng/dev/dev/combined_dev_data.tsv
+--dev_input_data_path ../data/eng/dev/combined_dev_data.tsv
 --dev_gold_path ../data/eng/dev/goldstandard_dev_2022.tsv
 --vector_type : one of ["emo_bow", "w2v", "pretrained", "bow_only", "emo_only"]
 --pretrained_model : one of ["word2vec-google-news-300", "glove-twitter-25"]
@@ -83,35 +83,28 @@ def get_args():
     )
 
     parser.add_argument(
-        "--train",
-        required=False,
-        action="store_true",
-        help="run training",
+        "--train", required=False, action="store_true", help="run training",
     )
 
     parser.add_argument(
-        "--inf",
-        required=False,
-        action="store_true",
-        help="run inference",
+        "--inf", required=False, action="store_true", help="run inference",
     )
 
     parser.add_argument(
-        "--output",
-        type=str,
-        required=True,
-        help="output directory",
+        "--output", type=str, required=True, help="output directory",
     )
 
     return parser.parse_args(sys.argv[1:])
 
+
 def write_predictions(predictions):
     output_path = arguments.output
     with open(
-            os.path.join(output_path, "predictions_EMO.tsv"), "w", encoding="utf8"
+        os.path.join(output_path, "predictions_EMO.tsv"), "w", encoding="utf8"
     ) as f:
         for entry in predictions:
             f.write(entry + "\n")
+
 
 def run_eval():
     output_path = arguments.output
@@ -120,7 +113,8 @@ def run_eval():
     output_dir = output_path
     evaluation.score(ref_path, res_path, output_dir)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     arguments = get_args()
     datasets = preprocess.get_datasets(arguments)
     updated_datasets = preprocess.update_data(datasets)

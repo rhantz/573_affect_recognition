@@ -101,16 +101,13 @@ def read_file(submission_path, nb_labels=2, nb_samp=10):
     return predictedList
 
 
-def score(ref_dir, gold_file, res_dir, pred_file, output_dir):
-    truth_file = open(os.path.join(ref_dir, gold_file))
+def score(ref_path, res_path, output_dir):
+    truth_file = open(ref_path)
     goldList = read_gold(truth_file)
     gold_emo = [k[2] for k in goldList]
     nb_samp = len(goldList)
 
-    submission_path = os.path.join(res_dir, pred_file)
-    predictedList = read_file(
-        submission_path=submission_path, nb_labels=1, nb_samp=nb_samp
-    )
+    predictedList = read_file(submission_path=res_path, nb_labels=1, nb_samp=nb_samp)
 
     if len(goldList) != len(predictedList):
         print("Number of labels is not aligned!")
@@ -127,16 +124,12 @@ def score(ref_dir, gold_file, res_dir, pred_file, output_dir):
         output_file.write(str_to_write)
 
 
-def main():
-    # [_, ref_dir, gold_file, res_dir, pred_file, output_dir] = sys.argv
-    ref_dir = "../data/eng/dev"
-    gold_file = "goldstandard_dev_2022.tsv"
-    res_dir = "../outputs"
-    pred_file = "predictions_EMO_toy.tsv"
-    output_dir = "../outputs"
-    score(ref_dir, gold_file, res_dir, pred_file, output_dir)
+# [_, ref_path, res_path, output_dir] = sys.argv
+# ref_path = "../data/eng/dev/goldstandard_dev_2022.tsv"
+# res_path = "../outputs/predictions_EMO.tsv"
+# output_dir = "../outputs"
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     score(ref_path, res_path, output_dir)
 
