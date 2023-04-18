@@ -1,4 +1,5 @@
 from sklearn import svm
+from sklearn import tree
 
 
 def get_model(training_data: list, model_name: str):
@@ -13,6 +14,11 @@ def get_model(training_data: list, model_name: str):
     if model_name == 'svm':
         clf = svm.SVC()
         clf.fit(training_data[0], training_data[1])
+        return clf
+
+    if model_name == 'DecisionTree':
+        clf = tree.DecisionTreeClassifier()
+        clf = clf.fit(X, Y)
         return clf
 
 def train_and_classify(formatted_data: list, model_name: str):
