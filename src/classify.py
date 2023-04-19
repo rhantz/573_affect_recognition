@@ -16,7 +16,7 @@ def get_model(training_data: list, model_name: str):
         clf.fit(training_data[0], training_data[1])
         return clf
 
-    if model_name == 'DecisionTree':
+    if model_name == 'dt':
         clf = tree.DecisionTreeClassifier()
         clf = clf.fit(training_data[0], training_data[1])
         return clf

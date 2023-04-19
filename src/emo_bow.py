@@ -57,7 +57,9 @@ class EmoBoW:
         elif language == "urdu":
             word_column_id = "Urdu Word"
         else:
-            raise ValueError("Please choose 'eng' or 'urdu' for the emotion lexicon language")
+            raise ValueError(
+                "Please choose 'eng' or 'urdu' for the emotion lexicon language"
+            )
 
         emotions = ["anger", "disgust", "fear", "joy", "sadness", "surprise"]
 
@@ -98,7 +100,10 @@ class EmoBoW:
             dictionary mapping each word to its count
             e.g. { a:3, also:4, zebra:1 }
         """
-        return {word_count.split(":")[0]: int(word_count.split(":")[1]) for word_count in word_count.strip().split(" ")}
+        return {
+            word_count.split(":")[0]: int(word_count.split(":")[1])
+            for word_count in word_count.strip().split(" ")
+        }
 
     def bow_vector(self, word_count: str) -> np.array:
         """
@@ -124,7 +129,7 @@ class EmoBoW:
 
         return vector
 
-    def emo_vector(self, word_count:str) -> np.array:
+    def emo_vector(self, word_count: str) -> np.array:
         """
         Constructs emotion vector from single training instance in format of word_count string
 
@@ -138,13 +143,13 @@ class EmoBoW:
 
         word_count_mapping = self.map_word_to_count(word_count)
 
-        vectors = []
+        vectors = [np.zeros(6)]
 
         for word, count in word_count_mapping.items():
             # Only worry about words in the emotion lexicon
             if word in self.emotion_lexicon:
                 vector = np.array(self.emotion_lexicon[word])
-                vectors.append(vector*count)
+                vectors.append(vector * count)
 
         return np.sum(vectors, axis=0)
 
