@@ -101,13 +101,13 @@ def read_file(submission_path, nb_labels=2, nb_samp=10):
     return predictedList
 
 
-def score(ref_path, res_path, output_dir):
+def score(ref_path, output_path, results_path, score_name):
     truth_file = open(ref_path)
     goldList = read_gold(truth_file)
     gold_emo = [k[2] for k in goldList]
     nb_samp = len(goldList)
 
-    predictedList = read_file(submission_path=res_path, nb_labels=1, nb_samp=nb_samp)
+    predictedList = read_file(submission_path=output_path, nb_labels=1, nb_samp=nb_samp)
 
     if len(goldList) != len(predictedList):
         print("Number of labels is not aligned!")
@@ -117,8 +117,8 @@ def score(ref_path, res_path, output_dir):
         gold_emo, predictedList
     )
 
-    with open(os.path.join(output_dir, "scores.txt"), "w") as output_file:
-        str_to_write = "Macro F1-Score: {5}\nMicro Recall: {0}\nMicro Precision: {1}\nMicro F1-Score: {2}\nMacro Recall: {3}\nMacro Precision: {4}\nAccuracy: {6}\n".format(
+    with open(os.path.join(results_path, score_name), "w") as output_file:
+        str_to_write = "Micro Recall: {0}\nMicro Precision: {1}\nMicro F1-Score: {2}\nMacro Recall: {3}\nMacro Precision: {4}\nMacro F1-Score: {5}\nAccuracy: {6}\n".format(
             micror, microp, microf, macror, macrop, macrof, accuracy
         )
         output_file.write(str_to_write)
