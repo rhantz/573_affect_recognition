@@ -10,7 +10,9 @@ CLI usage to train and run inference with w2v:
 --classifier : one of ['svm', 'dt']
 --train
 --inf
---output ../outputs`
+--output_dir ../outputs/D2
+--results_dir ../results
+--score_file D2_scores.out`
 
 """
 
@@ -91,14 +93,22 @@ def get_args():
     )
 
     parser.add_argument(
-        "--output", type=str, required=True, help="output directory",
+        "--output_dir", type=str, required=True, help="output directory",
+    )
+
+    parser.add_argument(
+        "--results_dir", type=str, required=True, help="results directory",
+    )
+
+    parser.add_argument(
+        "--score_file", type=str, required=True, help="name of score file",
     )
 
     return parser.parse_args(sys.argv[1:])
 
 
 def write_predictions(predictions):
-    output_path = arguments.output
+    output_path = arguments.output_dir
     with open(
         os.path.join(output_path, "predictions_EMO.tsv"), "w", encoding="utf8"
     ) as f:
@@ -107,11 +117,12 @@ def write_predictions(predictions):
 
 
 def run_eval():
-    output_path = arguments.output
     ref_path = arguments.dev_gold_path
-    res_path = os.path.join(output_path, "predictions_EMO.tsv")
-    output_dir = output_path
-    evaluation.score(ref_path, res_path, output_dir)
+    output_path = arguments.output_dir
+    output_path = os.path.join(output_path, "predictions_EMO.tsv")
+    results_path = arguments.results_dir
+    score_name = arguments.score_file
+    evaluation.score(ref_path, output_path, results_path, score_name)
 
 
 if __name__ == "__main__":
