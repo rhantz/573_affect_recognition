@@ -1,9 +1,9 @@
 """
 Driver script
 CLI usage to train and run inference with w2v:
-`python driver.py
+`python main.py
 --train_input_data_path ../data/eng/train/eng_train_new.tsv
---dev_input_data_path ../data/eng/dev/combined_dev_data.tsv
+--dev_input_data_path ../data/eng/dev/eng_dev_combined.tsv
 --dev_gold_path ../data/eng/dev/goldstandard_dev_2022.tsv
 --vector_type : one of ["emo_bow", "w2v", "pretrained", "bow_only", "emo_only"]
 --pretrained_model : one of ["word2vec-google-news-300", "glove-twitter-25"]
