@@ -1,0 +1,11 @@
+train_input_data_path: "../data/eng/train/eng_train_new.tsv"
+dev_input_data_path: "../data/eng/dev/eng_dev_combined.tsv"
+dev_gold_path: "../data/eng/dev/goldstandard_dev_2022.tsv"
+test_input_data_path: false
+vector_type: "pretrained"
+pretrained_model: "glove_twitter-25"
+classifier: "svm"
+output_dir: "../outputs/D2"
+predictions_file: "glovePt_svm_predictions.tsv"
+results_dir: "../results"
+score_file: "D2_glovePt_svm_scores.out"
