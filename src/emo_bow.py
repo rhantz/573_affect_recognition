@@ -30,8 +30,6 @@ import numpy as np
 
 class EmoBoW:
 
-    # TODO: discuss stemming lexicon words and vocab words
-
     def __init__(self, vocab: set, language: str):
         self.emotion_lexicon = self.get_emotion_lexicon(language)
         self.vocab_indices = self.map_vocab_to_index(vocab)
