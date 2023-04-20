@@ -12,13 +12,14 @@ CLI usage to train and run inference:
 --train
 --inf
 --output_dir ../outputs/D2
+--predictions_file predictions_EMO.tsv
 --results_dir ../results
 --score_file D2_scores.out`
 
 or
 
 `python main.py
---config ../config/<Deliverable>/<config_name>.yml
+--config ../config/<deliverable>/<config_name>.yml
 """
 
 import os
@@ -126,6 +127,11 @@ def get_args():
             "--score_file", type=str, required=True, help="name of score file",
         )
 
+        parser.add_argument(
+            "--predictions_file", type=str, required=True, help="name of predictions file",
+        )
+
+
         args = parser.parse_args(sys_args)
     return args
 
@@ -133,7 +139,7 @@ def get_args():
 def write_predictions(predictions):
     output_path = arguments.output_dir
     with open(
-        os.path.join(output_path, "predictions_EMO.tsv"), "w", encoding="utf8"
+        os.path.join(output_path, arguments.predictions_file), "w", encoding="utf8"
     ) as f:
         for entry in predictions:
             f.write(entry + "\n")
@@ -142,7 +148,7 @@ def write_predictions(predictions):
 def run_eval():
     ref_path = arguments.dev_gold_path
     output_path = arguments.output_dir
-    output_path = os.path.join(output_path, "predictions_EMO.tsv")
+    output_path = os.path.join(output_path, arguments.predictions_file)
     results_path = arguments.results_dir
     score_name = arguments.score_file
     evaluation.score(ref_path, output_path, results_path, score_name)
