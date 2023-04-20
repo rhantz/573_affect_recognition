@@ -12,12 +12,12 @@ def get_model(training_data: list, model_name: str):
         trained model
     """
     if model_name == 'svm':
-        clf = svm.SVC()
+        clf = svm.SVC(random_state=0)
         clf.fit(training_data[0], training_data[1])
         return clf
 
     if model_name == 'dt':
-        clf = tree.DecisionTreeClassifier()
+        clf = tree.DecisionTreeClassifier(random_state=0)
         clf = clf.fit(training_data[0], training_data[1])
         return clf
 
