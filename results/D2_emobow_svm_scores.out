@@ -1,7 +1,7 @@
-Micro Recall: 0.363
-Micro Precision: 0.363
-Micro F1-Score: 0.363
-Macro Recall: 0.1429
-Macro Precision: 0.909
-Macro F1-Score: 0.0761
-Accuracy: 0.363
+Micro Recall: 0.4222
+Micro Precision: 0.4222
+Micro F1-Score: 0.4222
+Macro Recall: 0.1942
+Macro Precision: 0.7495
+Macro F1-Score: 0.1595
+Accuracy: 0.4222
