@@ -1,4 +1,4 @@
 #!/bin/sh
-conda env create -f moodmasters-env.yml
+source ~/anaconda3/etc/profile.d/conda.sh
 conda activate moodmasters-env
 python ./main.py $@
