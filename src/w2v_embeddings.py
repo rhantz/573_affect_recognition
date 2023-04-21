@@ -31,6 +31,9 @@ from gensim.models import Word2Vec
 import gensim.downloader as api
 from nltk.tokenize import word_tokenize
 
+import nltk
+nltk.download('punkt')
+
 
 class W2V_Embeddings:
 
