@@ -15,7 +15,7 @@ git clone git@github.com:rhantz/573_affect_recognition.git
 2. Reproduce the conda environment used for the project. Use this command:
 
 ```
-# in the top-level directory 573-affect-recognition
+# in the top-level directory 573_affect_recognition
 conda env create -f src/moodmasters-env.yml
 ```
 
@@ -24,14 +24,14 @@ conda env create -f src/moodmasters-env.yml
 on condor:
 
 ```
-# in the top-level directory 573-affect-recognition
+# in the top-level directory 573_affect_recognition
 condor_submit D2.cmd
 ```
 
 without condor:
 
 ```
-# in the top-level directory 573-affect-recognition
+# in the top-level directory 573_affect_recognition
 ./run.sh --config ../config/D2/D2_best_system_bow_dt.yml
 ```
 
@@ -70,7 +70,7 @@ Accuracy: 0.3407
 3. and run:
 
 ```
-# in the top-level directory 573-affect-recognition
+# in the top-level directory 573_affect_recognition
 ./run.sh --config ../config/D2/<vector_type>_<classifier>.yml
 ```
 
@@ -89,7 +89,7 @@ Evaluation results (Scores for Macro/Micro F1, Recall, Precision and Accuracy) w
 For example, the second best system after Bag of Words + Decision Tree (bow_dt) is Emotion Enhanced Bag of Words + Decision Tree (emobow_dt)
 
 ```
-# in the top-level directory 573-affect-recognition, running:
+# in the top-level directory 573_affect_recognition, running:
 ./run.sh --config ../config/D2/emobow_dt.yml
 
 # will produce:
