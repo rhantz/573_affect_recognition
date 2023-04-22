@@ -15,7 +15,8 @@ git clone git@github.com:rhantz/573_affect_recognition.git
 2. Reproduce the conda environment used for the project. Use this command:
 
 ```
-conda env create -f moodmasters-env.yml
+# in the top-level directory 573-affect-recognition
+conda env create -f src/moodmasters-env.yml
 ```
 
 ### To run the best D2 system (Bag of Words embeddings + Decision Tree classifier)...
