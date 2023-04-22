@@ -43,7 +43,7 @@ Predictions will print to
 Evaluation results (Scores for Macro/Micro F1, Recall, Precision and Accuracy) will print to 
 
 ```
-573_affect_recognition/results/D3/D2_scores.out
+573_affect_recognition/results/D2_scores.out
 ```
 
 Best Results will be:
@@ -60,12 +60,13 @@ Accuracy: 0.3407
 
 ### To run other (lower-performing systems)...
 
-choose a vector type from [ "bow", "emo", "emobow", "w2v", "googlePt", "glovePt" ]
-choose a classifier from [ "dt", "svm" ]
+1. choose a vector type from [ "bow", "emo", "emobow", "w2v", "googlePt", "glovePt" ]
+
+2. choose a classifier from [ "dt", "svm" ]
 
 (See end of README for glossary)
 
-and run:
+3. and run:
 
 ```
 # in the top-level directory 573-affect-recognition
@@ -81,18 +82,18 @@ Predictions will print to
 Evaluation results (Scores for Macro/Micro F1, Recall, Precision and Accuracy) will print to 
 
 ```
-573_affect_recognition/results/D3/D2_<vector_type>_<classifier>_scores.out
+573_affect_recognition/results/D2_<vector_type>_<classifier>_scores.out
 ``` 
 
 For example, the second best system after Bag of Words + Decision Tree (bow_dt) is Emotion Enhanced Bag of Words + Decision Tree (emobow_dt)
 
 ```
-# # in the top-level directory 573-affect-recognition, running:
+# in the top-level directory 573-affect-recognition, running:
 ./run.sh --config ../config/D2/emobow_dt.yml
 
 # will produce:
 573_affect_recognition/outputs/D2/emobow_dt_predictions.tsv
-573_affect_recognition/results/D3/D2_emobow_dt_scores.out
+573_affect_recognition/results/D2_emobow_dt_scores.out
 ```
 
 Second Best Results will be:
