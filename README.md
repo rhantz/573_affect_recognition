@@ -118,4 +118,9 @@ Embeddings:
  - "w2v" : Word2Vec on our training data
  - "googlePt" : Word2Vec pretrained on Google News Corpus 
  - "glovePt" : GloVe pretrained on Twitter Corpus
+ 
+Classifiers
+
+- "dt" : decision tree
+- "svm" : SVM
 
