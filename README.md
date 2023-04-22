@@ -30,6 +30,7 @@ condor_submit D2.cmd
 without condor:
 
 ```
+# in the top-level directory 573-affect-recognition
 ./run.sh --config ../config/D2/D2_best_system_bow_dt.yml
 ```
 
@@ -67,6 +68,7 @@ choose a classifier from [ "dt", "svm" ]
 and run:
 
 ```
+# in the top-level directory 573-affect-recognition
 ./run.sh --config ../config/D2/<vector_type>_<classifier>.yml
 ```
 
@@ -85,7 +87,7 @@ Evaluation results (Scores for Macro/Micro F1, Recall, Precision and Accuracy) w
 For example, the second best system after Bag of Words + Decision Tree (bow_dt) is Emotion Enhanced Bag of Words + Decision Tree (emobow_dt)
 
 ```
-# running:
+# # in the top-level directory 573-affect-recognition, running:
 ./run.sh --config ../config/D2/emobow_dt.yml
 
 # will produce:
