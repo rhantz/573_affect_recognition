@@ -2,7 +2,7 @@ import re
 from nltk import SnowballStemmer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-
+import spacy
 import pandas as pd
 
 def update_data(datasets: list) -> list:
@@ -21,7 +21,7 @@ def update_data(datasets: list) -> list:
     return updated_datasets
 
 
-def process_text(text: str, tokenize=False, lowercase=True, remove_punctuation=True, numbers='remove', remove_stop_words=False,
+def process_text(text: str, remove_neg=True, tokenize=False, lowercase=True, remove_punctuation=True, numbers='remove', remove_stop_words=False,
                  stem=False) -> str:
     """
     Given text, returns a processed version of the text
@@ -47,8 +47,42 @@ def process_text(text: str, tokenize=False, lowercase=True, remove_punctuation=T
     if remove_stop_words:
         stops = set(stopwords.words('english'))
         text = ' '.join([word for word in text.split() if word not in stops])
+    if remove_neg:
+        text = handle_negation(text)
     text = ' '.join(text.split())
     return text
+
+def handle_negation(text: str) -> str:
+    nlp = spacy.load("en_core_web_sm")
+    nlp.add_pipe("spacy_wordnet", after="tagger")
+    doc = nlp(text)
+    negations = set()
+    negated_words = set()
+    all_tokens = []
+    token_index = 0
+    for token in doc:
+        all_tokens.append(token)
+        if token.dep_ == 'neg':
+            negations.add(token)
+            negated_words.add(token.head)
+        token_index += 1
+    updated_words = []
+    for token in all_tokens:
+        if token in negations:
+            continue
+        elif token in negated_words:
+            lemmas = token._.wordnet.lemmas()
+            if lemmas:
+                for lemma in lemmas:
+                    antonyms = lemma.antonyms()
+                    if antonyms:
+                        antonym = antonyms[0].name()
+                        updated_words.append(antonym)
+                        break
+        else:
+            updated_words.append(token.orth_)
+    updated_text = ' '.join(w for w in updated_words)
+    return updated_text
 
 
 def get_word_counts(text: str) -> str:
