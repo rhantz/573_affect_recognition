@@ -1,9 +1,19 @@
 import re
+import nltk
 from nltk import SnowballStemmer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import spacy
 import pandas as pd
+
+# The following lines of code are necessary for method handle_negation
+nltk.download('wordnet')
+from spacy_wordnet.wordnet_annotator import WordnetAnnotator
+spacy.cli.download("en_core_web_sm")
+nltk.download("omw")
+nlp = spacy.load("en_core_web_sm")
+nlp.add_pipe("spacy_wordnet", after="tagger")
+
 
 def update_data(datasets: list) -> list:
     """
@@ -53,8 +63,13 @@ def process_text(text: str, remove_neg=True, tokenize=False, lowercase=True, rem
     return text
 
 def handle_negation(text: str) -> str:
-    nlp = spacy.load("en_core_web_sm")
-    nlp.add_pipe("spacy_wordnet", after="tagger")
+     """
+    Given text, returns an updated version of text in which negated words are replaced with antonyms
+    Args:
+        text: string
+    Returns:
+        text: string, with negated words replaced with antonyms
+    """
     doc = nlp(text)
     negations = set()
     negated_words = set()
