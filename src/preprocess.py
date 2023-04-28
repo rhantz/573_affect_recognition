@@ -63,7 +63,7 @@ def process_text(text: str, remove_neg=True, tokenize=False, lowercase=True, rem
     return text
 
 def handle_negation(text: str) -> str:
-     """
+    """
     Given text, returns an updated version of text in which negated words are replaced with antonyms
     Args:
         text: string
