@@ -106,8 +106,8 @@ def smote(x_vectors: list, y_labels: list, **kwargs) -> tuple:
         tuple of vectors and labels and their synthetic additions
     """
 
-    sm = SMOTE(random_state=1)
-    x_sm, y_sm = sm.fit_resample(x_vectors, y_labels, **kwargs)
+    sm = SMOTE(random_state=1, **kwargs)
+    x_sm, y_sm = sm.fit_resample(x_vectors, y_labels)
     return x_sm, y_sm
 
 
@@ -131,23 +131,7 @@ def smote_tomek(x_vectors: list, y_labels: list, **kwargs) -> tuple:
         tuple of vectors and labels and their synthetic additions minus Tomek link removals
     """
 
-    smt = SMOTETomek(random_state=1)
-    x_smt, y_smt = smt.fit_resample(x_vectors, y_labels, **kwargs)
+    smt = SMOTETomek(random_state=1, **kwargs)
+    x_smt, y_smt = smt.fit_resample(x_vectors, y_labels)
     return x_smt, y_smt
-
-
-# TODO - this is only for testing purposes; will remove after function calls are added to main.py
-if __name__ == "__main__":
-
-    training_data = pd.read_table("../data/eng/train/eng_train_new.tsv", header=0)
-    updated_datasets = update_data([training_data])
-    formatted_datasets = build_vectors_emobow(vector_type="emobow", datasets=updated_datasets)
-    x, y = formatted_datasets[0]
-
-    # change function depending on which class_imbalance method you wish to test
-    x_new, y_new = smote_tomek(x, y)
-
-    # prints class distribution
-    print(Counter(y))
-    print(Counter(y_new))
 
