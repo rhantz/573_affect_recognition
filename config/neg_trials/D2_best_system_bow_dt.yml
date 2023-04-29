@@ -5,6 +5,6 @@ test_input_data_path: false
 vector_type: "bow_only"
 classifier: "dt"
 output_dir: "../outputs/D2"
-predictions_file: "D2_best_system_bow_dt_predictions.tsv"
+predictions_file: "D2_best_system_bow_dt_predictions_neg.tsv"
 results_dir: "../results"
-score_file: "D2_scores.out"
+score_file: "neg_enhanced_D2_scores.out"
