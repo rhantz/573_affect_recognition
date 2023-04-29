@@ -31,7 +31,7 @@ def update_data(datasets: list) -> list:
     return updated_datasets
 
 
-def process_text(text: str, remove_neg=True, tokenize=False, lowercase=True, remove_punctuation=True, numbers='remove', remove_stop_words=False,
+def process_text(text: str, remove_neg=False, tokenize=False, lowercase=True, remove_punctuation=True, numbers='remove', remove_stop_words=False,
                  stem=False) -> str:
     """
     Given text, returns a processed version of the text
