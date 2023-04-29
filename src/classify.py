@@ -1,5 +1,10 @@
+# classify and boosting
+
 from sklearn import svm
 from sklearn import tree
+
+# Boosting imports
+from sklearn.ensemble import AdaBoostClassifier
 
 
 def get_model(training_data: list, model_name: str):
@@ -16,9 +21,27 @@ def get_model(training_data: list, model_name: str):
         clf.fit(training_data[0], training_data[1])
         return clf
 
+    if model_name == 'svmboost':
+        X = training_data[0]
+        Y = training_data[1]
+
+        AdaBoost = AdaBoostClassifier(svm.SVC(probability=True, kernel='linear'), n_estimators=50, learning_rate=1.0, algorithm='SAMME')
+        clf = AdaBoost.fit(X, Y)
+        return clf
+
+
     if model_name == 'dt':
         clf = tree.DecisionTreeClassifier(random_state=0)
         clf = clf.fit(training_data[0], training_data[1])
+        return clf
+
+    if model_name == 'dtboost':
+        X = training_data[0]
+        Y = training_data[1]
+
+        model = tree.DecisionTreeClassifier(random_state=0, criterion='entropy', max_depth=1)
+        AdaBoost = AdaBoostClassifier(base_estimator=model, n_estimators=200, learning_rate=1)
+        clf = AdaBoost.fit(X, Y)
         return clf
 
 def train_and_classify(formatted_data: list, model_name: str):
