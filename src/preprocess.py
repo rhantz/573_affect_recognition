@@ -15,7 +15,7 @@ nlp = spacy.load("en_core_web_sm")
 nlp.add_pipe("spacy_wordnet", after="tagger")
 
 
-def update_data(datasets: list) -> list:
+def update_data(datasets: list, negation) -> list:
     """
     Given list of dataframes, returns a list of dataframes with additional columns
     Args:
@@ -25,13 +25,16 @@ def update_data(datasets: list) -> list:
     """
     updated_datasets = []
     for df in datasets:
-        df['essay_processed'] = df['essay'].apply(process_text)
+        if negation:
+            df['essay_processed'] = df['essay'].apply(process_text_negation)
+        else:
+            df['essay_processed'] = df['essay'].apply(process_text)
         df['word_counts'] = df['essay_processed'].apply(get_word_counts)
         updated_datasets.append(df)
     return updated_datasets
 
 
-def process_text(text: str, remove_neg=False, tokenize=False, lowercase=True, remove_punctuation=True, numbers='remove', remove_stop_words=False,
+def process_text(text: str, tokenize=False, lowercase=True, remove_punctuation=True, numbers='remove', remove_stop_words=False,
                  stem=False) -> str:
     """
     Given text, returns a processed version of the text
@@ -57,8 +60,36 @@ def process_text(text: str, remove_neg=False, tokenize=False, lowercase=True, re
     if remove_stop_words:
         stops = set(stopwords.words('english'))
         text = ' '.join([word for word in text.split() if word not in stops])
-    if remove_neg:
-        text = handle_negation(text)
+    text = ' '.join(text.split())
+    return text
+
+def process_text_negation(text: str, tokenize=False, lowercase=True, remove_punctuation=True, numbers='remove', remove_stop_words=False,
+                 stem=False) -> str:
+    """
+    Given text, returns a processed version of the text, including removal of negation
+    Args:
+        text: string
+        *Currently function is set up with many default arguments - we may change this*
+    Returns:
+        text: processed version of input text according to the default arguments
+    """
+    text = handle_negation(text)
+    if tokenize:
+        text = ' '.join(word_tokenize(text))
+    if lowercase:
+        text = text.lower()
+    if numbers == 'replace':
+        text = re.sub('[0-9]+', 'NUM', text)
+    if numbers == 'remove':
+        text = re.sub('[0-9]+', ' ', text)
+    if remove_punctuation:
+        text = re.sub(r'[^\sA-Za-z0-9À-ÖØ-öø-ÿЀ-ӿ/]', '', text)
+    if stem:
+        snow_stemmer = SnowballStemmer(language='english')
+        text = ' '.join([snow_stemmer.stem(word) for word in text.split()])
+    if remove_stop_words:
+        stops = set(stopwords.words('english'))
+        text = ' '.join([word for word in text.split() if word not in stops])
     text = ' '.join(text.split())
     return text
 

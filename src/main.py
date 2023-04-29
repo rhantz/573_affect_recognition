@@ -11,6 +11,7 @@ CLI usage to train and run inference:
 --classifier : one of ['svm', 'svmboost', 'dt', 'dtboost']
 --train
 --inf
+--negation
 --output_dir ../outputs/D2
 --predictions_file predictions_EMO.tsv
 --results_dir ../results
@@ -116,6 +117,10 @@ def get_args():
         )
 
         parser.add_argument(
+            "--negation", required=False, action="store_true", help="remove negation",
+        )
+
+        parser.add_argument(
             "--output_dir", type=str, required=True, help="output directory",
         )
 
@@ -157,7 +162,11 @@ def run_eval():
 if __name__ == "__main__":
     arguments = get_args()
     datasets = preprocess.get_datasets(arguments)
-    updated_datasets = preprocess.update_data(datasets)
+    try:
+        negation = arguments.negation
+        updated_datasets = preprocess.update_data(datasets, True)
+    except AttributeError:
+        updated_datasets = preprocess.update_data(datasets, False)
     formatted_data = create_vectors.make_vectors(arguments, updated_datasets)
     predictions = classify.train_and_classify(formatted_data, arguments.classifier)
     write_predictions(predictions)
