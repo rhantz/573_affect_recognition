@@ -8,7 +8,7 @@ CLI usage to train and run inference:
 --dev_gold_path ../data/eng/dev/goldstandard_dev_2022.tsv
 --vector_type : one of ["emo_bow", "w2v", "pretrained", "bow_only", "emo_only"]
 --pretrained_model : one of ["word2vec-google-news-300", "glove-twitter-25"]
---classifier : one of ['svm', 'dt']
+--classifier : one of ['svm', 'svmboost', 'dt', 'dtboost']
 --train
 --inf
 --output_dir ../outputs/D2
@@ -101,7 +101,7 @@ def get_args():
 
         parser.add_argument(
             "--classifier",
-            choices=["svm", "dt"],
+            choices=["svm", "svmboost", "dt", "dtboost"],
             type=str,
             required=True,
             help="classifier module to use",
