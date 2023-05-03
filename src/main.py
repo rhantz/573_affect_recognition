@@ -8,7 +8,7 @@ CLI usage to train and run inference:
 --dev_gold_path ../data/eng/dev/goldstandard_dev_2022.tsv
 --vector_type : one of ["emo_bow", "w2v", "pretrained", "bow_only", "emo_only"]
 --pretrained_model : one of ["word2vec-google-news-300", "glove-twitter-25"]
---classifier : one of ['svm', 'svmboost', 'dt', 'dtboost']
+--classifier : one of ['svm', 'svmboost', 'dt', 'dtboost', 'roberta']
 --train
 --inf
 --negation
@@ -32,6 +32,7 @@ import preprocess
 import create_vectors
 import classify
 import evaluation
+import roberta_classify
 
 
 def get_args():
@@ -102,7 +103,7 @@ def get_args():
 
         parser.add_argument(
             "--classifier",
-            choices=["svm", "svmboost", "dt", "dtboost"],
+            choices=["svm", "svmboost", "dt", "dtboost", "roberta"],
             type=str,
             required=True,
             help="classifier module to use",
@@ -168,6 +169,9 @@ if __name__ == "__main__":
     except AttributeError:
         updated_datasets = preprocess.update_data(datasets, False)
     formatted_data = create_vectors.make_vectors(arguments, updated_datasets)
-    predictions = classify.train_and_classify(formatted_data, arguments.classifier)
+    if arguments.classifier == "roberta":
+        predictions = roberta_classify.classify(datasets)
+    else:
+        predictions = classify.train_and_classify(formatted_data, arguments.classifier)
     write_predictions(predictions)
     run_eval()
