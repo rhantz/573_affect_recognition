@@ -34,7 +34,7 @@ import classify
 import evaluation
 import roberta_classify
 import roberta_imb_classify
-
+import class_imbalance
 
 def get_args():
     """
@@ -122,6 +122,9 @@ def get_args():
             "--negation", required=False, action="store_true", help="remove negation",
         )
 
+        parser. add_argument(
+            "--random_over_under_sample", action="store_true", help="apply random_over_under_sample class_imbalance method"
+        )
         parser.add_argument(
             "--output_dir", type=str, required=True, help="output directory",
         )
@@ -164,17 +167,26 @@ def run_eval():
 if __name__ == "__main__":
     arguments = get_args()
     datasets = preprocess.get_datasets(arguments)
+    
     try:
         negation = arguments.negation
         updated_datasets = preprocess.update_data(datasets, True)
     except AttributeError:
         updated_datasets = preprocess.update_data(datasets, False)
+
     formatted_data = create_vectors.make_vectors(arguments, updated_datasets)
+
+    if arguments.random_over_under_sample:
+        x, y = formatted_data[0]
+        x_new, y_new = class_imbalance.random_over_under_sample(x, y)
+        formatted_data[0] = (x_new, y_new)
+
     if arguments.classifier == "roberta":
         predictions = roberta_classify.classify(datasets)
     elif arguments.classifier == "roberta_imb":
         predictions = roberta_imb_classify.classify(datasets)
     else:
         predictions = classify.train_and_classify(formatted_data, arguments.classifier)
+    
     write_predictions(predictions)
     run_eval()
