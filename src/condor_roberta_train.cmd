@@ -1,4 +1,4 @@
-executable = roberta_run.sh
+executable = roberta_train.sh
 getenv     = true
 error      = roberta.error
 log        = roberta.log
