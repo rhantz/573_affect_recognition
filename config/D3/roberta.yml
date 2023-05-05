@@ -8,3 +8,4 @@ output_dir: "../outputs/roberta_test"
 predictions_file: "roberta_predictions.tsv"
 results_dir: "../results"
 score_file: "roberta_scores.out"
+random_over_under_sample: false
