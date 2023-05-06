@@ -19,102 +19,53 @@ git clone git@github.com:rhantz/573_affect_recognition.git
 conda env create -f src/moodmasters-env.yml
 ```
 
-### To run the best D2 system (Bag of Words embeddings + Decision Tree classifier)...
+### To run the best D3 system (Roberta model + class balancing)...
 
 on condor:
 
 ```
 # in the top-level directory 573_affect_recognition
-condor_submit D2.cmd
+condor_submit D3.cmd
 ```
 
 without condor:
 
 ```
 # in the top-level directory 573_affect_recognition
-./run.sh --config ../config/D2/D2_best_system_bow_dt.yml
+./run.sh --config ../config/D3/roberta_imb.yml
 ```
 
 Predictions will print to 
 
 ```
-573_affect_recognition/outputs/D2/D2_best_system_bow_dt_predictions.tsv
+573_affect_recognition/outputs/D3/roberta_imb_predictions.tsv
 ```
 
 Evaluation results (Scores for Macro/Micro F1, Recall, Precision and Accuracy) will print to 
 
 ```
-573_affect_recognition/results/D2_scores.out
+573_affect_recognition/results/D3_scores.out
 ```
 
 Best Results will be:
 
 ```
-Micro Recall: 0.3407
-Micro Precision: 0.3407
-Micro F1-Score: 0.3407
-Macro Recall: 0.2596
-Macro Precision: 0.2432
-Macro F1-Score: 0.2436
-Accuracy: 0.3407
+Micro Recall: 0.5148
+Micro Precision: 0.5148
+Micro F1-Score: 0.5148
+Macro Recall: 0.536
+Macro Precision: 0.4735
+Macro F1-Score: 0.4588
+Accuracy: 0.5148
 ```
 
-### To run other (lower-performing systems)...
-
-1. choose a vector type from [ "bow", "emo", "emobow", "w2v", "googlePt", "glovePt" ]
-
-2. choose a classifier from [ "dt", "svm" ]
-
-(See end of README for glossary)
-
-3. and run:
-
-```
-# in the top-level directory 573_affect_recognition
-./run.sh --config ../config/D2/<vector_type>_<classifier>.yml
-```
-
-Predictions will print to 
-
-```
-573_affect_recognition/outputs/D2/<vector_type>_<classifier>_predictions.tsv
-```
-
-Evaluation results (Scores for Macro/Micro F1, Recall, Precision and Accuracy) will print to 
-
-```
-573_affect_recognition/results/D2_<vector_type>_<classifier>_scores.out
-``` 
-
-For example, the second best system after Bag of Words + Decision Tree (bow_dt) is Emotion Enhanced Bag of Words + Decision Tree (emobow_dt)
-
-```
-# in the top-level directory 573_affect_recognition, running:
-./run.sh --config ../config/D2/emobow_dt.yml
-
-# will produce:
-573_affect_recognition/outputs/D2/emobow_dt_predictions.tsv
-573_affect_recognition/results/D2_emobow_dt_scores.out
-```
-
-Second Best Results will be:
-
-```
-Micro Recall: 0.3259
-Micro Precision: 0.3259
-Micro F1-Score: 0.3259
-Macro Recall: 0.2352
-Macro Precision: 0.2154
-Macro F1-Score: 0.2156
-Accuracy: 0.3259
-```
 
 #### Glossary
 
 Embeddings:
 
  - "bow" : Bag of Words 
- - "emo" : Emotion Lexicion only  
+ - "emo" : Emotion Lexicon only  
  - "emobow" : Emotion Enhanced Bag of Words 
  - "w2v" : Word2Vec on our training data
  - "googlePt" : Word2Vec pretrained on Google News Corpus 
@@ -124,4 +75,6 @@ Classifiers
 
 - "dt" : decision tree
 - "svm" : SVM
+- "roberta" : distilroberta-base model fine-tuned on our training data
+- "roberta_imb" : distilroberta-base model fine-tuned on our training data with random over/under sampling class balancing strategy
 
