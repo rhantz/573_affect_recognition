@@ -15,14 +15,26 @@ def make_vectors(args, datasets: list) -> list:
          formatted data: list of lists - in each list, list[0] are feature vectors and list [1] are gold labels
     """
     vector_type = args.vector_type
-    if vector_type == 'pretrained':
-        model_name = args.pretrained_model
-        formatted_data = build_vectors_pretrained(datasets, model_name)
-    elif vector_type == 'w2v':
-        formatted_data = build_vectors_w2v(datasets)
-    else:
-        formatted_data = build_vectors_emobow(vector_type, datasets)
-    return formatted_data
+    try:
+        if args.urdu:
+            if vector_type == 'pretrained':
+                raise ValueError(
+                    "There are no pretrained models available for Urdu data")
+            elif vector_type == 'w2v':
+                            raise ValueError(
+                    "w2v is not a valid selection for Urdu data")
+            else:
+                formatted_data = build_vectors_emobow(vector_type, datasets, 'urdu')
+                return formatted_data
+    except AttributeError:
+        if vector_type == 'pretrained':
+            model_name = args.pretrained_model
+            formatted_data = build_vectors_pretrained(datasets, model_name)
+        elif vector_type == 'w2v':
+            formatted_data = build_vectors_w2v(datasets)
+        else:
+            formatted_data = build_vectors_emobow(vector_type, datasets, 'eng')
+        return formatted_data
 
 
 def build_vectors_pretrained(datasets: list, model_name: str) -> list:
@@ -78,7 +90,7 @@ def build_vectors_w2v(datasets: list) -> list:
     return all_x_y
 
 
-def build_vectors_emobow(vector_type: str, datasets: list):
+def build_vectors_emobow(vector_type: str, datasets: list, lang: str):
     """
     Given input dataframe, creates vectors for the dataframes
     Args:
@@ -88,7 +100,7 @@ def build_vectors_emobow(vector_type: str, datasets: list):
          all_x_y: list of lists - in each list, list[0] are feature vectors and list [1] are gold labels
     """
     vocabulary = get_vocabulary(datasets[0])
-    emotion_vectorizer = EmoBoW(vocabulary, "eng")
+    emotion_vectorizer = EmoBoW(vocabulary, lang)
     all_x_y = []
     for i in range(len(datasets)):
         data = datasets[i]
