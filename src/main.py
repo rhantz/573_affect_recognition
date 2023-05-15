@@ -35,6 +35,7 @@ import evaluation
 import roberta_classify
 import roberta_imb_classify
 import class_imbalance
+import preprocess_urdu
 
 def get_args():
     """
@@ -141,6 +142,9 @@ def get_args():
             "--predictions_file", type=str, required=True, help="name of predictions file",
         )
 
+        parser.add_argument(
+            "--urdu", action="store_true", help="use urdu pathway"
+            )
 
         args = parser.parse_args(sys_args)
     return args
@@ -167,12 +171,16 @@ def run_eval():
 if __name__ == "__main__":
     arguments = get_args()
     datasets = preprocess.get_datasets(arguments)
-    
+
     try:
-        negation = arguments.negation
-        updated_datasets = preprocess.update_data(datasets, True)
+        if arguments.urdu:
+            updated_datasets = preprocess_urdu.update_data(datasets)
     except AttributeError:
-        updated_datasets = preprocess.update_data(datasets, False)
+        try:
+            negation = arguments.negation
+            updated_datasets = preprocess.update_data(datasets, True)
+        except AttributeError:
+            updated_datasets = preprocess.update_data(datasets, False)
 
     formatted_data = create_vectors.make_vectors(arguments, updated_datasets)
 
