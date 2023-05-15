@@ -98,10 +98,24 @@ class EmoBoW:
             dictionary mapping each word to its count
             e.g. { a:3, also:4, zebra:1 }
         """
-        return {
-            word_count.split(":")[0]: int(word_count.split(":")[1])
-            for word_count in word_count.strip().split(" ")
-        }
+        out_dict = {}
+        for word_count in word_count.strip().split(" "):
+            try:
+                w = word_count.split(":")[0]
+                c = int(word_count.split(":")[1])
+                out_dict[w] = c
+            except ValueError:
+                try:
+                    w = word_count.split(":")[1]
+                    c = int(word_count.split(":")[0])
+                    out_dict[w] = c
+                except ValueError:
+                    continue
+        return out_dict
+##        return {
+##            word_count.split(":")[0]: int(word_count.split(":")[1])
+##            for word_count in word_count.strip().split(" ")
+##        }
 
     def bow_vector(self, word_count: str) -> np.array:
         """
