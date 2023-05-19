@@ -34,6 +34,7 @@ import classify
 import evaluation
 import roberta_classify
 import roberta_imb_classify
+import roberta_urdu_classify
 import class_imbalance
 import preprocess_urdu
 
@@ -193,6 +194,8 @@ if __name__ == "__main__":
         predictions = roberta_classify.classify(datasets)
     elif arguments.classifier == "roberta_imb":
         predictions = roberta_imb_classify.classify(datasets)
+    elif arguments.classifier == "roberta_urdu":
+        predictions = roberta_urdu_classify.classify(datasets)
     else:
         predictions = classify.train_and_classify(formatted_data, arguments.classifier)
     
