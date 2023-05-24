@@ -8,7 +8,7 @@ CLI usage to train and run inference:
 --dev_gold_path ../data/eng/dev/goldstandard_dev_2022.tsv
 --vector_type : one of ["emo_bow", "w2v", "pretrained", "bow_only", "emo_only"]
 --pretrained_model : one of ["word2vec-google-news-300", "glove-twitter-25"]
---classifier : one of ['svm', 'svmboost', 'dt', 'dtboost', 'roberta', 'roberta_imb']
+--classifier : one of ['svm', 'svmboost', 'dt', 'dtboost', 'roberta', 'roberta_imb','roberta_urdu','roberta_urdu_imb']
 --train
 --inf
 --negation
@@ -35,6 +35,7 @@ import evaluation
 import roberta_classify
 import roberta_imb_classify
 import roberta_urdu_classify
+import roberta_urdu_imb_classify
 import class_imbalance
 import preprocess_urdu
 
@@ -106,7 +107,7 @@ def get_args():
 
         parser.add_argument(
             "--classifier",
-            choices=["svm", "svmboost", "dt", "dtboost", "roberta","roberta_imb"],
+            choices=["svm", "svmboost", "dt", "dtboost", "roberta","roberta_imb", "roberta_urdu","roberta_urdu_imb"],
             type=str,
             required=True,
             help="classifier module to use",
@@ -196,6 +197,8 @@ if __name__ == "__main__":
         predictions = roberta_imb_classify.classify(datasets)
     elif arguments.classifier == "roberta_urdu":
         predictions = roberta_urdu_classify.classify(datasets)
+    elif arguments.classifier == "roberta_urdu_imb":
+        predictions = roberta_urdu_imb_classify.classify(datasets)
     else:
         predictions = classify.train_and_classify(formatted_data, arguments.classifier)
     
