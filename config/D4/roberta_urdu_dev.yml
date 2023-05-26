@@ -1,0 +1,12 @@
+train_input_data_path: "../data/urdu/train/train_cleaned.tsv"
+dev_input_data_path: "../data/urdu/dev/urdu_dev_new.tsv"
+dev_gold_path: "../data/urdu/dev/urdu_dev_golds.tsv"
+test_input_data_path: false
+vector_type: "bow_only"
+classifier: "roberta_urdu"
+output_dir: "../outputs/D4/adaptation/devtest/"
+predictions_file: "roberta_urdu_predictions.tsv"
+results_dir: "../results/D4/adaptation/devtest/"
+score_file: "D4_scores.out"
+random_over_under_sample: false
+urdu: true
