@@ -21,49 +21,62 @@ git clone git@github.com:rhantz/573_affect_recognition.git
 conda env create -f src/moodmasters-env.yml
 ```
 
-### To run the best PRIMARY task system (Roberta model + class balancing)...
-
-on condor:
+### To run the best PRIMARY task system (Ensemble of Roberta, Roberta + Class Balancing, EmoBow Balanced Decision Tree) ...
 
 ```
 # in the top-level directory 573_affect_recognition
-condor_submit D3.cmd
-```
 
-without condor:
-
-```
-# in the top-level directory 573_affect_recognition
-./run.sh --config ../config/D3/roberta_imb.yml
+# TEST
+./ensemble_voting.sh ../config/D4/roberta_test.yml ../config/D4/roberta_imb_test.yml ../config/D4/emobow_bal_dt_test.yml test
+# DEV
+./ensemble_voting.sh ../config/D4/roberta_dev.yml ../config/D4/roberta_imb_dev.yml ../config/D4/emobow_bal_dt_dev.yml dev
 ```
 
 Predictions will print to 
 
 ```
-573_affect_recognition/outputs/D3/roberta_imb_predictions.tsv
+# TEST 
+573_affect_recognition/outputs/D4/primary/evaltest/D4_combined_predictions.tsv
+# DEV
+573_affect_recognition/outputs/D4/primary/devtest/D4_combined_predictions.tsv
 ```
 
 Evaluation results (Scores for Macro/Micro F1, Recall, Precision and Accuracy) will print to 
 
 ```
-573_affect_recognition/results/D3_scores.out
+# TEST
+573_affect_recognition/results/D4/primary/evaltest/D4_scores.out
+# DEV
+573_affect_recognition/results/D4/primary/devtest/D4_scores.out
 ```
 
-Best Results will be:
+Test results will be:
 
 ```
-Micro Recall: 0.5148
-Micro Precision: 0.5148
-Micro F1-Score: 0.5148
-Macro Recall: 0.536
-Macro Precision: 0.4735
-Macro F1-Score: 0.4588
-Accuracy: 0.5148
+Micro Recall: 0.5446
+Micro Precision: 0.5446
+Micro F1-Score: 0.5446
+Macro Recall: 0.3791
+Macro Precision: 0.3983
+Macro F1-Score: 0.3697
+Accuracy: 0.5446
 ```
 
-### To run the best ADAPTATION task system (Roberta model) on the TEST data...
+Dev results will be:
 
-on condor:
+```
+Micro Recall: 0.6296
+Micro Precision: 0.6296
+Micro F1-Score: 0.6296
+Macro Recall: 0.4796
+Macro Precision: 0.6862
+Macro F1-Score: 0.5026
+Accuracy: 0.6296
+```
+
+### To run the best ADAPTATION task system (Roberta model, no class balancing)...
+
+on condor (TEST only):
 
 ```
 # in the top-level directory 573_affect_recognition
@@ -74,22 +87,32 @@ without condor:
 
 ```
 # in the top-level directory 573_affect_recognition
+
+# TEST
 ./run.sh --config ../config/D4/roberta_urdu_test.yml
+# DEV
+./run.sh --config ../config/D4/roberta_urdu_dev.yml
 ```
 
 Predictions will print to 
 
 ```
-573_affect_recognition/outputs/D4/adaptation/evaltest/roberta_imb_predictions.tsv
+# TEST
+573_affect_recognition/outputs/D4/adaptation/evaltest/roberta_urdu_predictions.tsv
+# DEV
+573_affect_recognition/outputs/D4/adaptation/devtest/roberta_urdu_predictions.tsv
 ```
 
 Evaluation results (Scores for Macro/Micro F1, Recall, Precision and Accuracy) will print to 
 
 ```
+# TEST
 573_affect_recognition/results/D4/adaptation/evaltest/D4_scores.out
+# DEV
+573_affect_recognition/results/D4/adaptation/devtest/D4_scores.out
 ```
 
-Best Results will be:
+Test results will be:
 
 ```
 Micro Recall: 0.8381
@@ -99,6 +122,18 @@ Macro Recall: 0.4851
 Macro Precision: 0.6739
 Macro F1-Score: 0.4843
 Accuracy: 0.8381
+```
+
+Dev results will be:
+
+```
+Micro Recall: 0.8496
+Micro Precision: 0.8496
+Micro F1-Score: 0.8496
+Macro Recall: 0.513
+Macro Precision: 0.7601
+Macro F1-Score: 0.5292
+Accuracy: 0.8496
 ```
 
 
