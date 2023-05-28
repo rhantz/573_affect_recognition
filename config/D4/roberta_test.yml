@@ -1,0 +1,11 @@
+train_input_data_path: "../data/eng/train/eng_train_new.tsv"
+dev_input_data_path: "../data/eng/test/eng_test_new.tsv"
+dev_gold_path: "../data/eng/test/eng_test_golds.tsv"
+test_input_data_path: false
+vector_type: "bow_only"
+classifier: "roberta"
+output_dir: "../outputs/D4/primary/evaltest"
+predictions_file: "roberta_test_predictions.tsv"
+results_dir: "../results/D4/primary/evaltest"
+score_file: "roberta_test_scores.out"
+random_over_under_sample: false
