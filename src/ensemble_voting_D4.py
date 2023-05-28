@@ -67,7 +67,7 @@ def main():
         ref_path = '../data/eng/dev/goldstandard_dev_2022.tsv'
         output_path = '../outputs/D4/primary/devtest/D4_combined_predictions.tsv'
         results_path = '../results/D4/primary/devtest'
-        score_name = 'D4_main_task_dev_results.out'
+        score_name = 'D4_scores.out'
         evaluation.score(ref_path, output_path, results_path, score_name)
     elif data == 'test':
     # print to d4/primary/evaltest, run eval
@@ -75,7 +75,7 @@ def main():
         ref_path = "../data/eng/test/eng_test_golds.tsv"
         output_path = '../outputs/D4/primary/evaltest/D4_combined_predictions.tsv'
         results_path = '../results/D4/primary/evaltest'
-        score_name = 'D4_main_task_test_results.out'
+        score_name = 'D4_scores.out'
         evaluation.score(ref_path, output_path, results_path, score_name)
     else:
         raise ValueError("You did not choose test or dev.")
